@@ -21,10 +21,9 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/assets",
+              "src/assets/favicon.ico",
+              { "glob": "**/*", "input": "src/assets" }
             ],
             "styles": [
               "src/styles.scss"
@@ -79,7 +78,11 @@
             },
             "development": {
               "buildTarget": "CLEARWAY:build:development"
+            },
+            "standalone": {
+              "buildTarget": "CLEARWAY:build:standalone"
             }
+
           },
           "defaultConfiguration": "development"
         },
@@ -94,7 +97,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/assets"
               }
             ],
             "styles": [
