@@ -5,15 +5,20 @@ import { PagesService } from './pages.service';
 import { provideRouter } from '@angular/router';
 import { routes } from './pages.routes';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginationComponent } from './pagination/pagination.component';
+import { PageContentComponent } from './page-content/page-content.component';
+
 
 
 @NgModule({
   declarations: [
-    PageComponent
+    PageComponent,
+    PaginationComponent,
+    PageContentComponent,
   ],
   imports: [
     CommonModule,
-  ],
+],
   providers: [
     PagesService,
     provideRouter(routes),

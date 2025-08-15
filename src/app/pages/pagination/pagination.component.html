@@ -1,0 +1,23 @@
+<ng-container *ngIf="orientation() === 'vertical'; else horisontal">
+  <div class="pagination pagination--vertical">
+    @if (list()?.length) {
+      <ul class="menu menu--vertical">
+        @for (item of list(); track $index) {
+          <li class="menu-item menu-item--vertical"><a >{{ item.label }}</a></li>
+        }
+      </ul>
+    }
+  </div>
+</ng-container>
+
+<ng-template #horisontal>
+  <div class="pagination pagination--horisontal">
+    @if (list()?.length) {
+      <ul class="menu menu--horisontal">
+        @for (item of list(); track $index) {
+          <li class="menu-item menu-item--horisontal"><a >{{ item.label }}</a></li>
+        }
+      </ul>
+    }
+  </div>
+</ng-template>
