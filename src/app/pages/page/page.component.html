@@ -1,5 +1,12 @@
 <section class="page">
-  <app-pagination [list]="paginationList()" orientation="horisontal"/>
-  <app-page-content></app-page-content>
+  <app-pagination
+    [list]="paginationList()"
+    orientation="horisontal"
+    [current]="currentPage()"
+    [newPage]="newPage()" />
+  <div class="page-wrapper">
+    @for (item of pagesContent(); track $index) {
+      <app-page-content [id]="item.number" [idPrefix]="anchorPrefix" [content]="item.imageUrl" (isReady)="childSetReady($event)" />
+    }
+  </div>
 </section>
-

@@ -1,1 +1,3 @@
-<p>page-content.component works!</p>
+<div [attr.id]="`${idPrefix()}${id()}`" class="page-content">
+  <img src="{{content()}}" alt="{{`${idPrefix()}${id()}`}}">
+</div>

@@ -3,7 +3,10 @@
     @if (list()?.length) {
       <ul class="menu menu--vertical">
         @for (item of list(); track $index) {
-          <li class="menu-item menu-item--vertical"><a >{{ item.label }}</a></li>
+          <li class="menu-item menu-item--vertical">
+            @let isCurrent = `${current()}` === item.value;
+            <button  [disabled]="isCurrent" (click)="paginationEvent(+item.value)">{{ item.label }}</button>
+          </li>
         }
       </ul>
     }
@@ -15,7 +18,10 @@
     @if (list()?.length) {
       <ul class="menu menu--horisontal">
         @for (item of list(); track $index) {
-          <li class="menu-item menu-item--horisontal"><a >{{ item.label }}</a></li>
+          <li class="menu-item menu-item--horisontal">
+            @let isCurrent = `${current()}` === item.value;
+            <button [disabled]="isCurrent" (click)="paginationEvent(+item.value)">{{ item.label }}</button>
+          </li>
         }
       </ul>
     }

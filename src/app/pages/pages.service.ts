@@ -28,7 +28,6 @@ export class PagesService implements OnDestroy {
     .pipe(
       filter(item => !!item),
       map(items => {
-        console.log(items);
         return items.map(item => item.number )
       }),
       takeUntilDestroyed(this.destroyRef)
@@ -36,7 +35,6 @@ export class PagesService implements OnDestroy {
   }
 
   getPages(){
-    console.log('get_pages', environment)
     if(!environment.dataUrl) { return ; }
     this.http
       .get<PagesResponse>(environment.dataUrl)
@@ -49,9 +47,6 @@ export class PagesService implements OnDestroy {
         error => console.error(error)
 
       )
-
   }
-    ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+    ngOnDestroy(): void {}
 }
