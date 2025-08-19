@@ -1,12 +1,18 @@
 <section class="page">
   <app-pagination
     [list]="paginationList()"
-    orientation="horisontal"
     [current]="currentPage()"
-    [newPage]="newPage()" />
+    [newPage]="newPage()"
+    (zoomEmitter)="zoomHandler($event)" /><!--TODO make it via event service-->
   <div class="page-wrapper">
     @for (item of pagesContent(); track $index) {
-      <app-page-content [id]="item.number" [idPrefix]="anchorPrefix" [content]="item.imageUrl" (isReady)="childSetReady($event)" />
+      <app-page-content
+       [id]="item.number"
+       [idPrefix]="anchorPrefix"
+       [content]="item.imageUrl"
+       [scale]="scale()"
+       [currentPage]="currentPage()"
+       (isReady)="childSetReady($event)" />
     }
   </div>
 </section>
