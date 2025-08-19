@@ -9,6 +9,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { PageContentComponent } from './page-content/page-content.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { PagesComponent } from './pages/pages.component';
+import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PagesComponent } from './pages/pages.component';
     CommonModule,
     RouterLink,
     RouterOutlet,
+    PinchZoomComponent
   ],
   providers: [
     PagesService,

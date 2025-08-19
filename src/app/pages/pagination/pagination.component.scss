@@ -1,5 +1,6 @@
 .pagination {
-  display: block;
+  display: flex;
+  justify-content: space-between;
 
   &--vertical {
     width: 2rem;
@@ -34,4 +35,18 @@
   &--horisontal {
     @include horisontal;
   }
+}
+.instruments {
+  display: flex;
+
+  &--horisontal {
+    width: 6rem;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.35rem 0.25rem;
+  }
+}
+.instruments > * {
+  display: block;
+  margin: 0 0.1rem;
 }
