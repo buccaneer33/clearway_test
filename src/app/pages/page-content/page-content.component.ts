@@ -48,6 +48,9 @@ export class PageContentComponent implements AfterContentInit, OnDestroy {
       }
     })
   })
+  onRightClick(event: any){
+    console.log(event);
+  }
 
   ngAfterContentInit(): void {
     this.isReady.emit(this.id());

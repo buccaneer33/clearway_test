@@ -1,59 +1,26 @@
-# CLEARWAY
+# CLEARWAY TEST
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.5.
+Проект основа на [Angular CLI](https://github.com/angular/angular-cli) version 20.1.5.
 
 ## Development server
 
-To start a local development server, run:
+Что бы запустить проект наберите в консоли:
 
 ```bash
-ng serve
+ng start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Веб-сервер разработчика запускается на `http://localhost:4200/`. А дальше редиректы роутера вынесут вас автоматом.
 
-## Code scaffolding
+Проект не является полностью законченым. Моя вина. Я изначально сильно недооценил разницу между 15 и 20. Такое впечатление что ушел с AngularJS на Angular 2. Так что  это получается первая проба пера на 20. Проект не использует все новшества 20. Я все таки предпочитаю замыкать в модулях все что необходимо для одной задачи. Standalone компоентам пока мое фи! 
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Что реализовано: 
+- standalone конфигурация для работы с моками. Легко и быстро можно переключиться для работы с бэком заменив конфигурацию.
+- система роутинга автоматом отправляет по нужному маршруту.
+- система увеличения документа включая работу зума с кнопок "+" и "-".
 
-```bash
-ng generate component component-name
-```
+Что не удалось реализовать: 
+- Аннотации. Под них сделоно хранилище данных для хранения в виде плоского списка. Реализована часть круда. Частично реализован вывод. Самми аннотации пока только в виде пустого компонента. И пока ни одной идеи как без CDK организовать drag&drop.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Известные проблемы:
+- можно через скролбар выставить положение страницы минуя меню и роут не отработает.

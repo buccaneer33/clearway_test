@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, computed, DestroyRef, HostListener, inject, signal, Signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PagesService } from '../pages.service';
+import { PagesService } from '../services/pages.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { PaginationItem } from '../interface/pagination.interface';
 import { Page } from '../interface/page.interface';

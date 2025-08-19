@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { DestroyRef, inject, Injectable, OnDestroy } from '@angular/core';
 import { environment } from '@environment/environment'
 import { BehaviorSubject, filter, map, Subject } from 'rxjs';
-import { Page, PagesResponse } from './interface/page.interface';
+import { Page, PagesResponse } from '../interface/page.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
