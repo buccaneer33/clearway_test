@@ -1,4 +1,4 @@
-<div [attr.id]="`${idPrefix()}${id()}`" class="page-content">
+<div [attr.id]="`${idPrefix()}${id()}`" class="page-content" appContext appAnnotations [secId]="id()">
   <pinch-zoom
     [wheel]="false"
     [minScale]="1"
