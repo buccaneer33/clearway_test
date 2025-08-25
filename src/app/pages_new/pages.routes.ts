@@ -5,14 +5,9 @@ export const PageRoutes: Route[] =  [
   {
     path: '',
     children: [
-      /*{
-        path: 'page',
-        component: PageComponent
-      },*/
       {
         path: 'page',
         pathMatch: 'prefix',
-        //component: PageComponent,
         children: [
           {
             path: ':id',

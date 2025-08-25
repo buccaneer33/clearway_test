@@ -1,14 +1,14 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, computed, DestroyRef, HostListener, inject, signal, Signal } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, computed, DestroyRef, HostListener, inject, signal, Signal, effect, untracked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../services/pages.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { PaginationItem } from '../interface/pagination.interface';
 import { Page } from '../interface/page.interface';
-import { ViewportScroller } from '@angular/common';
-import { delay, filter, map, switchMap } from 'rxjs/operators';
+import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { PageContentComponent } from '../page-content/page-content.component';
+import { ScrollService } from '../services/scroll.service';
 
 @Component({
   selector: 'app-page',
@@ -27,6 +27,8 @@ import { PageContentComponent } from '../page-content/page-content.component';
 export class PageComponent implements AfterContentInit {
   private activatedRoute = inject(ActivatedRoute);
   private dataService = inject(PagesService);
+  private destroyRef = inject(DestroyRef);
+
 
   pagesList: Signal <number[] | undefined> = toSignal(this.dataService.pagesNum$);
 
@@ -41,40 +43,44 @@ export class PageComponent implements AfterContentInit {
   });
 
   pagesContent: Signal <Page[] | undefined> = toSignal(this.dataService.pagesData$);
+
+  isConnentLoaded = effect(() => {
+    const pages = this.pagesContent();
+    untracked(() => {
+      this.routerListener();
+    });
+  });
+
   anchorPrefix = 'anchor_';
-  private scroller = inject(ViewportScroller);
+  private scroller = inject(ScrollService);
 
   constructor(){
     this.dataService.getPages();
   }
-  ngAfterContentInit(): void {
-    this.activatedRoute
-    .params
-    .pipe(
-      map(param => param['id'])
-    )
-    .subscribe({
-      next: data => {
-        console.log(data);
-        this.scroller.scrollToAnchor(`scroll`)
-      }
-  });
+  ngAfterContentInit(): void {}
+
+   routerListener(){
+    setTimeout(() => {
+      this.activatedRoute
+        .params
+        .pipe(
+          map(param => param['id']),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe({
+          next: data => {
+          console.log(data);
+          this.scroller.scrollToElementById(`${this.anchorPrefix}${data}`)
+          }
+        });
+    }, 1000)
+  }
 
 
- }
-
-
-  /*private scroller = inject(ViewportScroller);
-
-  destroyRef = inject(DestroyRef);
-  private childrenReady = new BehaviorSubject<number[]>([]);
+  /*
   currentPage = signal<number>(0);
   newPage = signal<number>(0);
   scale = signal<number>(0);
-
-
-
-
 
   @HostListener('wheel', ['$event']) onWheelScroll(event: WheelEvent) {
     const pages = this.pagesList();
@@ -100,9 +106,6 @@ export class PageComponent implements AfterContentInit {
   }
 
 
-  childSetReady(childReport: number){
-    this.childrenReady.next([...this.childrenReady.getValue(), childReport])
-  }
   zoomHandler(key: string){
     if(!['+', '-'].includes(key)){ return; }
     if(key === '+'){
@@ -112,14 +115,4 @@ export class PageComponent implements AfterContentInit {
     }
   }*/
 
-
-
-  /*scrollTo(id: string){
-    const anchor = `#${this.anchorPrefix}${id}`;
-    //TODO make scroll via scroller
-    const element = document.querySelector(anchor);
-    if (element) {
-      element.scrollIntoView();
-    }
-  }*/
 }
