@@ -1,0 +1,19 @@
+.context-menu {
+  position: absolute;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  padding: 0.5rem;
+  z-index: 1000;
+  background-color: #fff;
+  color: #444;
+  font-family: 'MS Shell Dlg 2'
+
+}
+.context-menu > ul {
+  list-style-type: none;
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+  margin: 0;
+}
+.context-menu > ul > li {
+  margin: 0.1rem 0;
+  cursor: pointer;
+}

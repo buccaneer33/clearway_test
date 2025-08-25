@@ -1,0 +1,23 @@
+
+<section class="page">
+  <app-pagination
+    [list]="paginationList()"
+     />
+    <!-- (zoomEmitter)="zoomHandler($event)"
+     [current]="currentPage()"
+    [newPage]="newPage()"
+    -->
+  <div class="page-wrapper">
+    @for (item of pagesContent(); track $index) {
+      <app-page-content
+       [id]="item.number"
+       [idPrefix]="anchorPrefix"
+       [content]="item.imageUrl"
+       />
+    }<!--
+           [scale]="scale()"
+       [currentPage]="currentPage()"
+       (isReady)="childSetReady($event)"
+    -->
+  </div>
+</section>
