@@ -1,15 +1,10 @@
 import {
   AfterContentInit,
   Component,
-  computed,
-  effect,
   input,
   OnDestroy,
-  output,
-  untracked,
-  ViewChild
 } from '@angular/core';
-import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
+// import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
 
 @Component({
   selector: 'app-page-content',
@@ -17,6 +12,7 @@ import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
   styleUrl: './page-content.component.scss',
   standalone: true,
 })
+
 export class PageContentComponent implements AfterContentInit, OnDestroy {
   readonly id = input.required<number>();
   readonly idPrefix = input.required<string>();

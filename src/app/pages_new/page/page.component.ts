@@ -1,10 +1,10 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, computed, DestroyRef, HostListener, inject, signal, Signal, effect, untracked } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, computed, DestroyRef, HostListener, inject, signal, Signal, effect, untracked, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../services/pages.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { PaginationItem } from '../interface/pagination.interface';
 import { Page } from '../interface/page.interface';
-import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { PageContentComponent } from '../page-content/page-content.component';
@@ -29,6 +29,7 @@ export class PageComponent implements AfterContentInit {
   private dataService = inject(PagesService);
   private destroyRef = inject(DestroyRef);
 
+  @ViewChildren(PageContentComponent, { read: ElementRef }) private childElements!: QueryList<ElementRef>;
 
   pagesList: Signal <number[] | undefined> = toSignal(this.dataService.pagesNum$);
 
@@ -43,6 +44,12 @@ export class PageComponent implements AfterContentInit {
   });
 
   pagesContent: Signal <Page[] | undefined> = toSignal(this.dataService.pagesData$);
+
+  _scrolledSection = new BehaviorSubject<number>(0);
+  get scrolledSection$(){
+    return this._scrolledSection.asObservable().pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef))
+  }
+  scrolledSection = toSignal(this.scrolledSection$)
 
   isConnentLoaded = effect(() => {
     const pages = this.pagesContent();
@@ -59,7 +66,7 @@ export class PageComponent implements AfterContentInit {
   }
   ngAfterContentInit(): void {}
 
-   routerListener(){
+  routerListener(){
     setTimeout(() => {
       this.activatedRoute
         .params
@@ -69,42 +76,36 @@ export class PageComponent implements AfterContentInit {
         )
         .subscribe({
           next: data => {
-          console.log(data);
-          this.scroller.scrollToElementById(`${this.anchorPrefix}${data}`)
+            this.scroller.scrollToElementById(`${this.anchorPrefix}${data}`)
+            this.onScroll();
           }
         });
     }, 1000)
   }
+  onScroll() {
+    if(!this.childElements.length) {return;}
+    const container = this.childElements.first.nativeElement.parentElement;
+    const scrollTop = container.scrollTop;
+    const scrollBottom = scrollTop + container.clientHeight;
+
+    this.childElements.forEach((childEl, index) => {
+      const childTop = childEl.nativeElement.offsetTop;
+      const childBottom = childTop + childEl.nativeElement.offsetHeight;
+
+      if (childTop >= scrollTop && childTop < scrollBottom - 500) {
+        this._scrolledSection.next(index + 1);
+      }
+    });
+  }
 
 
   /*
-  currentPage = signal<number>(0);
   newPage = signal<number>(0);
   scale = signal<number>(0);
-
-  @HostListener('wheel', ['$event']) onWheelScroll(event: WheelEvent) {
-    const pages = this.pagesList();
-    const maxPage = pages && Math.max.apply(null, pages);
-    const minPage = pages && Math.min.apply(null, pages);
-
-    if (event.deltaY <= 0){
-      if(minPage && this.currentPage() > minPage){
-        this.newPage.set(+this.currentPage() - 1);
-      }
-    } else {
-      if(maxPage && this.currentPage() < maxPage ){
-        this.newPage.set(+this.currentPage() + 1);
-      }
-    }
-    event.stopImmediatePropagation();
-    event.stopPropagation();
-    event.preventDefault();
-  }
 
   @HostListener('window:keydown', ['$event']) handleKeyDown(event: KeyboardEvent) {
     this.zoomHandler(event.key);
   }
-
 
   zoomHandler(key: string){
     if(!['+', '-'].includes(key)){ return; }
