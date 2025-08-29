@@ -1,10 +1,9 @@
   <div class="pagination pagination--horisontal">
-    @let route = currentRoute$ | async;
     @if (list()?.length) {
       <ul class="menu menu--horisontal">
         @for (item of list(); track $index) {
           <li class="menu-item menu-item--horisontal">
-            <button [disabled]="+route === +item.value" [routerLink]="['/pages_new', 'page', item.value]">{{ item.label }}</button>
+            <button [disabled]="scrolled() === +item.value" [routerLink]="['/pages_new', 'page', item.value]">{{ item.label }}</button>
           </li>
         }
       </ul>

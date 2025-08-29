@@ -2,12 +2,13 @@
 <section class="page">
   <app-pagination
     [list]="paginationList()"
+    [scrolled]="scrolledSection()"
      />
     <!-- (zoomEmitter)="zoomHandler($event)"
      [current]="currentPage()"
     [newPage]="newPage()"
     -->
-  <div class="page-wrapper">
+  <div class="page-wrapper" (scroll)="onScroll()">
     @for (item of pagesContent(); track $index) {
       <app-page-content
        [id]="item.number"
