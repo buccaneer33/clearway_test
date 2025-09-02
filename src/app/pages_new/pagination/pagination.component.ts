@@ -16,14 +16,4 @@ export class PaginationComponent {
   readonly list = input.required<PaginationItem[] | undefined>();
   readonly scrolled = input<number>();
   readonly router = inject(Router);
-  //readonly zoomEmitter = output<'+' | '-'>();
-  //readonly saveEmitter = output<void>();
-
-
-  /*zoomClick(event: '+' | '-'){
-    this.zoomEmitter.emit(event);
-  }
-  saveClick(){
-    this.saveEmitter.emit();
-  }*/
 }

@@ -1,10 +1,22 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, computed, DestroyRef, HostListener, inject, signal, Signal, effect, untracked, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  Signal,
+  effect,
+  untracked,
+  ViewChildren,
+  QueryList,
+  ElementRef
+ } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../services/pages.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { PaginationItem } from '../interface/pagination.interface';
 import { Page } from '../interface/page.interface';
-import { debounceTime, delay, filter, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { PageContentComponent } from '../page-content/page-content.component';
@@ -24,7 +36,7 @@ import { ScrollService } from '../services/scroll.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PageComponent implements AfterContentInit {
+export class PageComponent {
   private activatedRoute = inject(ActivatedRoute);
   private dataService = inject(PagesService);
   private destroyRef = inject(DestroyRef);
@@ -64,7 +76,6 @@ export class PageComponent implements AfterContentInit {
   constructor(){
     this.dataService.getPages();
   }
-  ngAfterContentInit(): void {}
 
   routerListener(){
     setTimeout(() => {
@@ -97,23 +108,4 @@ export class PageComponent implements AfterContentInit {
       }
     });
   }
-
-
-  /*
-  newPage = signal<number>(0);
-  scale = signal<number>(0);
-
-  @HostListener('window:keydown', ['$event']) handleKeyDown(event: KeyboardEvent) {
-    this.zoomHandler(event.key);
-  }
-
-  zoomHandler(key: string){
-    if(!['+', '-'].includes(key)){ return; }
-    if(key === '+'){
-      this.scale() < 10 && this.scale.set(+this.scale() + 1)
-    } else {
-      this.scale() > 0 && this.scale.set(+this.scale() - 1)
-    }
-  }*/
-
 }

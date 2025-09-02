@@ -18,3 +18,12 @@
   background-color: #ccc;
   overflow-x: auto;
 }
+.page-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: white;
+  height: 40rem;
+  width: 60%;
+}
