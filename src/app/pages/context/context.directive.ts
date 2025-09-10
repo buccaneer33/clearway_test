@@ -19,7 +19,7 @@ export class ContextDirective implements OnInit {
     this.onrightClick(event)
     event.stopPropagation();
   }
-    @HostListener('document:click', ['$event']) onClick(event: MouseEvent) {
+  @HostListener('document:click', ['$event']) onClick(event: MouseEvent) {
     console.log(event);
     this.disableContextMenu()
     event.stopPropagation();
