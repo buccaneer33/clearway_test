@@ -21,6 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { PageContentComponent } from '../page-content/page-content.component';
 import { ScrollService } from '../services/scroll.service';
+import { EditFormComponent } from '../edit-form/edit-form.component';
 
 @Component({
   selector: 'app-page',
@@ -29,11 +30,10 @@ import { ScrollService } from '../services/scroll.service';
   standalone: true,
   imports: [
     PaginationComponent,
-    PageContentComponent
+    PageContentComponent,
+    EditFormComponent
   ],
-  providers: [
-
-  ],
+  providers: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageComponent {

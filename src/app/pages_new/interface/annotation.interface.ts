@@ -5,3 +5,10 @@ export interface Annotation {
   y: number;
   content: string;
 }
+
+export interface EditorParams {
+  secId: number;
+  x: number;
+  y: number;
+  content: string;
+}

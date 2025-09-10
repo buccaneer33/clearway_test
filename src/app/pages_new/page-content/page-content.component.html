@@ -1,3 +1,4 @@
-<div [attr.id]="`${idPrefix()}${id()}`" class="page-content">
+<div [attr.id]="`${idPrefix()}${id()}`" class="page-content" appContext [sectionId]="id()">
   <img src="{{content()}}" alt="{{`${idPrefix()}${id()}`}}" />
+  <app-annotations [secId]="id()"></app-annotations>
 </div>
