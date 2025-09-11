@@ -1,7 +1,7 @@
 import { Component, inject, signal, Signal } from '@angular/core';
-import { AnnonationsService } from '../services/annonations.service';
 import { CommonModule } from '@angular/common';
 import { EditorParams } from '../interface/annotation.interface';
+import { EventService } from '../services/event.service';
 
 
 @Component({
@@ -17,9 +17,9 @@ export class ContextMenuComponent {
   show : Signal<boolean> = signal(false);
   sectionId: Signal<number> = signal(0);
 
-  annotationService = inject(AnnonationsService);
+  eventService = inject(EventService);
 
   addAnnotation(){
-    this.annotationService.openEditor(<EditorParams>{secId: this.sectionId(), x: this.x(), y: this.y()})
+    this.eventService.openEditor(<EditorParams>{secId: this.sectionId(), x: this.x(), y: this.y()})
   }
 }

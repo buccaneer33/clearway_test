@@ -1,4 +1,14 @@
 <div [attr.id]="`${idPrefix()}${id()}`" class="page-content" appContext [sectionId]="id()">
-  <img src="{{content()}}" alt="{{`${idPrefix()}${id()}`}}" />
+  <pinch-zoom
+    [wheel]="false"
+    [minScale]="1"
+    [disablePan]="false"
+    [limit-zoom]="10"
+    [draggableImage]="true"
+    [limitPan]="false"
+    [disableZoomControl]="'disable'">
+    <img src="{{content()}}" alt="{{`${idPrefix()}${id()}`}}" />
+  </pinch-zoom>
   <app-annotations [secId]="id()"></app-annotations>
 </div>
+

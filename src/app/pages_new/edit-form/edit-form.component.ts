@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { AnnonationsService } from '../services/annonations.service';
+import { EventService } from '../services/event.service';
 import { Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -14,13 +15,14 @@ import { CommonModule } from '@angular/common';
 export class EditFormComponent {
   private formBuilder = inject(FormBuilder);
   private annotationService = inject(AnnonationsService);
+  private eventService = inject(EventService);
   showEditor = signal<boolean>(false);
   sectionId = 0;
   x = signal<number>(0);
   y = signal<number>(0);
 
   constructor(){
-    this.annotationService
+    this.eventService
       .editor$
       .subscribe(params => {
         this.x.set(params?.x ? params.x : 0);

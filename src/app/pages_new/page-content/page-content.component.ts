@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { ContextDirective } from '../directives/context.directive';
 import { AnnotationsComponent } from '../annotations/annotations.component';
+import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
 
 @Component({
   selector: 'app-page-content',
@@ -13,7 +14,8 @@ import { AnnotationsComponent } from '../annotations/annotations.component';
   imports: [
     ContextDirective,
     AnnotationsComponent,
-]
+    PinchZoomComponent
+  ]
 })
 
 export class PageContentComponent {

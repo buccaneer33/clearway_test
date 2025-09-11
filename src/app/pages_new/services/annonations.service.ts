@@ -6,6 +6,7 @@ import { BehaviorSubject, filter, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AnnonationsService {
+  storageKey = 'annotations'
 
   private _comments = new BehaviorSubject<Annotation[]>([]);
   get comments$(){
@@ -15,19 +16,13 @@ export class AnnonationsService {
     return this._comments.getValue()
   }
 
-  private _editor = new BehaviorSubject<EditorParams | null>(null);
-  get editor$(){
-    return this._editor.asObservable().pipe(filter(value => !!value));
-  }
-
   constructor(){
-    const anns = localStorage.getItem('annotations');
+    const anns = localStorage.getItem(this.storageKey);
     if(anns){
       const annArr = JSON.parse(anns);
       this._comments.next(annArr);
     }
   }
-
 
   getCommentsBySectionId(secId: number){
     return this.comments$
@@ -53,13 +48,13 @@ export class AnnonationsService {
   }
   addAnnotation(sectionId: number, content: string, x: number, y: number){
     const annObj = [...this.comments, this.setNew(sectionId, content, x, y)]
-    localStorage.setItem('annotations', JSON.stringify(annObj));
+    localStorage.setItem(this.storageKey, JSON.stringify(annObj));
     this._comments.next(annObj);
   }
   removeAnnotation(id: number){
     const list = this.comments.filter(comment => comment.id !== id);
     this._comments.next(list);
-    localStorage.setItem('annotations', JSON.stringify(list));
+    localStorage.setItem(this.storageKey, JSON.stringify(list));
   }
   replaceAnnotation(id: number, x: number, y: number){
      const list = this.comments.filter(comment => comment.id !== id);
@@ -68,10 +63,10 @@ export class AnnonationsService {
      replaced.y = y;
      const annObj = [...list, replaced]
      this._comments.next(annObj);
-     localStorage.setItem('annotations', JSON.stringify(annObj));
+     localStorage.setItem(this.storageKey, JSON.stringify(annObj));
   }
-
-  openEditor(params: EditorParams){
-    this._editor.next(params);
+  clearAnnotations(){
+    this._comments.next([]);
+    localStorage.removeItem(this.storageKey);
   }
 }
