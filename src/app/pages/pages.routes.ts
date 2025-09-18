@@ -1,30 +1,30 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
 import { PageComponent } from './page/page.component';
-import { PagesComponent } from './pages/pages.component';
 
-export const routes: Routes = [
+export const PageRoutes: Route[] =  [
   {
-    path: 'page',
-    component: PagesComponent,
+    path: '',
     children: [
       {
-        path: '',
-        component: PageComponent,
-        outlet: 'pages',
+        path: 'page',
+        pathMatch: 'prefix',
         children: [
+          {
+            path: ':id',
+            component: PageComponent,
+          },
+          {
+            path: '',
+            redirectTo: '1',
+            pathMatch: 'full'
+          }
         ]
       },
       {
-        path: ':id',
-        pathMatch: 'full',
-        outlet: 'pages',
-        component: PageComponent
-      },
+        path: '',
+        redirectTo: 'page',
+        pathMatch: 'full'
+      }
     ]
   },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'page'
-  }
 ];

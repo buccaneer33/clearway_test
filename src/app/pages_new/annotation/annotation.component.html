@@ -1,7 +1,0 @@
-<div cdkDrag cdkDragBoundary=".page-content" (cdkDragEnded)="dragPosition($event)" class="annotation" [ngStyle]="{'left.px': x(), 'top.px': y()}">
-  <div class="annotation_control">
-    <button cdkDragHandle class="annotation_handler">&#9769;</button>
-    <button class="annotation_close" (click)="remove()">&#10005;</button>
-  </div>
-  <div class="annotation_content">{{content()}}</div>
-</div>

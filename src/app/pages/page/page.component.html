@@ -1,18 +1,23 @@
 <section class="page">
   <app-pagination
     [list]="paginationList()"
-    [current]="currentPage()"
-    [newPage]="newPage()"
-    (zoomEmitter)="zoomHandler($event)" /><!--TODO make it via event service-->
-  <div class="page-wrapper">
-    @for (item of pagesContent(); track $index) {
+    [scrolled]="scrolledSection()" />
+  <div class="page-wrapper" (scroll)="onScroll()">
+    @for (item of pagesContent(); track item.number) {
+      @defer (on viewport; prefetch on idle) {
       <app-page-content
        [id]="item.number"
        [idPrefix]="anchorPrefix"
-       [content]="item.imageUrl"
-       [scale]="scale()"
-       [currentPage]="currentPage()"
-       (isReady)="childSetReady($event)" />
+       [content]="item.imageUrl" />
+      }
+      @placeholder {
+        <div class="page-placeholder">
+          <p>
+            Placeholder
+          </p>
+        </div>
+      }
     }
+    <app-edit-form />
   </div>
 </section>

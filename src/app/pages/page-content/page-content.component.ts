@@ -1,61 +1,60 @@
+import { EventService } from './../services/event.service';
 import {
-  AfterContentInit,
   Component,
-  computed,
-  effect,
+  inject,
   input,
-  OnDestroy,
-  output,
-  untracked,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
+import { ContextDirective } from '../directives/context.directive';
+import { AnnotationsComponent } from '../annotations/annotations.component';
 import { PinchZoomComponent } from '@meddv/ngx-pinch-zoom';
+import { zoomDirection } from '../interface/zoom.interface';
 
 @Component({
   selector: 'app-page-content',
   templateUrl: './page-content.component.html',
   styleUrl: './page-content.component.scss',
-  standalone: false,
+  standalone: true,
+  imports: [
+    ContextDirective,
+    AnnotationsComponent,
+    PinchZoomComponent
+  ]
 })
-export class PageContentComponent implements AfterContentInit, OnDestroy {
+
+export class PageContentComponent {
   readonly id = input.required<number>();
   readonly idPrefix = input.required<string>();
   readonly content = input.required<string>();
-  readonly scale = input.required<number>();
-  readonly currentPage = input.required<number>();
-
-  private prevScale = 0;
-
-  readonly isReady = output<number>();
+  private eventService = inject(EventService);
 
   @ViewChild(PinchZoomComponent) pinchZoom: PinchZoomComponent | undefined;
+  prevScale: number = 0;
 
-  scaleImg = effect(() => {
-    const currScale = this.scale();
-    untracked(() => {
-      if(this.currentPage() !== this.id()){ return; }
-      if(currScale !== undefined && this.pinchZoom){
-        const scaleStep = currScale === 0 ? 0 : Math.abs(currScale) / 10;
-        if(currScale === 0) {
-          this.pinchZoom.toggleZoom();
-        } else
-        if(currScale > this.prevScale){
-          this.pinchZoom.zoomIn(scaleStep);
-        } else {
-          this.pinchZoom.zoomOut(scaleStep);
+  ngOnInit() {
+    this.eventService
+      .getZoomStateById$(this.id())
+      .subscribe(
+        (zoomState) => {
+          if(!zoomState || !zoomState.length){ return; }
+          console.log('state: ', zoomState)
+          if(zoomState[0].value !== undefined && this.pinchZoom){
+            if(zoomState[0].value !== this.prevScale) {
+              if(zoomState[0].value !== 0){
+                switch(zoomState[0].direction){
+                  case zoomDirection['+']:
+                    this.pinchZoom.zoomIn(zoomState[0].value);
+                    break;
+                  case zoomDirection['-']:
+                    this.pinchZoom.zoomOut(zoomState[0].value);
+                    break;
+                }
+              } else {
+                this.pinchZoom.toggleZoom();
+              }
+            }
+            this.prevScale = zoomState[0].value;
         }
-        this.prevScale = currScale;
-      }
-    })
-  })
-  onRightClick(event: any){
-    console.log(event);
-  }
-
-  ngAfterContentInit(): void {
-    this.isReady.emit(this.id());
-  }
-  ngOnDestroy(): void {
-    this.pinchZoom && this.pinchZoom.destroy();
+      });
   }
 }

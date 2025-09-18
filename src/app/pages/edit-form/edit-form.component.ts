@@ -25,6 +25,7 @@ export class EditFormComponent {
     this.eventService
       .editor$
       .subscribe(params => {
+        console.log('params: ', params)
         this.x.set(params?.x ? params.x : 0);
         this.y.set(params?.y ? params.y : 0);
         this.sectionId = params.secId;

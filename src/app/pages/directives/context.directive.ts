@@ -22,8 +22,9 @@ export class ContextDirective implements OnInit {
     this.contextmenu.set(false);
   }
   onrightClick(event: MouseEvent) {
-    this.contextmenuX.set(event.x); // clientX
-    this.contextmenuY.set(event.y - 100); // clientY
+    console.log(event);
+    this.contextmenuX.set(event.layerX); // clientX
+    this.contextmenuY.set(event.layerY); // clientY
     this.contextmenu.set(true);
   }
 

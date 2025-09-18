@@ -42,10 +42,10 @@ export class PagesService implements OnDestroy {
         map(items => items?.pages),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(
-        data => data && this._pagesData.next(data),
-        error => console.error(error)
-
+      .subscribe({
+          next: data => this._pagesData.next(data),
+          error: error => console.error(error),
+        }
       )
   }
     ngOnDestroy(): void {}

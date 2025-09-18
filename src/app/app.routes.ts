@@ -3,10 +3,11 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'pages',
-    loadChildren: () => import('./pages/pages-module').then(m => m.PagesModule)
+    loadChildren: () => import('./pages/pages.routes').then(m => m.PageRoutes)
   },
-    {
-    path: 'pages_new',
-    loadChildren: () => import('./pages_new/pages.routes').then(m => m.PageRoutes)
-  },
+  {
+    path: '',
+    redirectTo: 'pages',
+    pathMatch: 'full'
+  }
 ];

@@ -1,34 +1,16 @@
-<ng-container *ngIf="orientation() === 'vertical'; else horisontal">
-  <div class="pagination pagination--vertical">
-    @if (list()?.length) {
-      <ul class="menu menu--vertical">
-        @for (item of list(); track $index) {
-          <li class="menu-item menu-item--vertical">
-            @let isCurrent = `${current()}` === item.value;
-            <button  [disabled]="isCurrent" (click)="paginationEvent(+item.value)">{{ item.label }}</button>
-          </li>
-        }
-      </ul>
-    }
-  </div>
-</ng-container>
-
-<ng-template #horisontal>
   <div class="pagination pagination--horisontal">
     @if (list()?.length) {
       <ul class="menu menu--horisontal">
         @for (item of list(); track $index) {
           <li class="menu-item menu-item--horisontal">
-            @let isCurrent = `${current()}` === item.value;
-            <button [disabled]="isCurrent" (click)="paginationEvent(+item.value)">{{ item.label }}</button>
+            <button [disabled]="scrolled() === +item.value" [routerLink]="['/pages', 'page', item.value]">{{ item.label }}</button>
           </li>
         }
       </ul>
     }
     <div class="instruments instruments--horisontal">
-      <!--<button (click)="saveClick()">Save</button> -->
-      <button (click)="zoomClick('+')">+</button>
-      <button (click)="zoomClick('-')">-</button>
+      <button (click)="saveClick()">Save</button>
+      <button (click)="zoomClick(_zoomDirection['+'])">+</button>
+      <button (click)="zoomClick(_zoomDirection['-'])">-</button>
     </div>
   </div>
-</ng-template>
