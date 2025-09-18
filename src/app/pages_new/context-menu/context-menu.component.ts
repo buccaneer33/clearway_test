@@ -2,7 +2,7 @@ import { Component, inject, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditorParams } from '../interface/annotation.interface';
 import { EventService } from '../services/event.service';
-
+import { zoomDirection } from "../interface/zoom.interface";
 
 @Component({
   selector: 'app-context-menu.component',
@@ -18,8 +18,15 @@ export class ContextMenuComponent {
   sectionId: Signal<number> = signal(0);
 
   eventService = inject(EventService);
+  _zoomDirection = zoomDirection
 
   addAnnotation(){
     this.eventService.openEditor(<EditorParams>{secId: this.sectionId(), x: this.x(), y: this.y()})
+  }
+  saveAnnotations(){
+    this.eventService.saveAnnotations();
+  }
+  zoom(event: zoomDirection){
+    this.eventService.zoomEvent(event, this.sectionId())
   }
 }

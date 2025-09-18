@@ -9,7 +9,8 @@ import {
   untracked,
   ViewChildren,
   QueryList,
-  ElementRef
+  ElementRef,
+  signal
  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PagesService } from '../services/pages.service';
@@ -22,6 +23,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 import { PageContentComponent } from '../page-content/page-content.component';
 import { ScrollService } from '../services/scroll.service';
 import { EditFormComponent } from '../edit-form/edit-form.component';
+import { AnnonationsService } from '../services/annonations.service';
 
 @Component({
   selector: 'app-page',
@@ -58,6 +60,7 @@ export class PageComponent {
   pagesContent: Signal <Page[] | undefined> = toSignal(this.dataService.pagesData$);
 
   _scrolledSection = new BehaviorSubject<number>(0);
+  scale = signal<number>(0);
   get scrolledSection$(){
     return this._scrolledSection.asObservable().pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef))
   }

@@ -1,6 +1,7 @@
-
 <section class="page">
-  <app-pagination [list]="paginationList()" [scrolled]="scrolledSection()" />
+  <app-pagination
+    [list]="paginationList()"
+    [scrolled]="scrolledSection()" />
   <div class="page-wrapper" (scroll)="onScroll()">
     @for (item of pagesContent(); track item.number) {
       @defer (on viewport; prefetch on idle) {
@@ -17,6 +18,6 @@
         </div>
       }
     }
+    <app-edit-form />
   </div>
-  <app-edit-form />
 </section>

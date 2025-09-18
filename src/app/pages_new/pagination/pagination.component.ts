@@ -1,7 +1,8 @@
+import { EventService } from './../services/event.service';
 import { Component, inject, input } from '@angular/core';
 import { PaginationItem } from '../interface/pagination.interface';
-import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { zoomDirection } from "../interface/zoom.interface";
 
 @Component({
   selector: 'app-pagination',
@@ -15,5 +16,15 @@ import { RouterLink } from '@angular/router';
 export class PaginationComponent {
   readonly list = input.required<PaginationItem[] | undefined>();
   readonly scrolled = input<number>();
-  readonly router = inject(Router);
+  private eventService = inject(EventService);
+
+  _zoomDirection = zoomDirection;
+
+  zoomClick(event: zoomDirection) {
+    const section = this.scrolled();
+    section && this.eventService.zoomEvent(event, section);
+  }
+  saveClick() {
+    this.eventService.saveAnnotations();
+  }
 }
