@@ -1,0 +1,16 @@
+  <div class="pagination pagination--horisontal">
+    @if (list()?.length) {
+      <ul class="menu menu--horisontal">
+        @for (item of list(); track $index) {
+          <li class="menu-item menu-item--horisontal">
+            <button [disabled]="scrolled() === +item.value" [routerLink]="['/pages', 'page', item.value]">{{ item.label }}</button>
+          </li>
+        }
+      </ul>
+    }
+    <div class="instruments instruments--horisontal">
+      <button (click)="saveClick()">Save</button>
+      <button (click)="zoomClick(_zoomDirection['+'])">+</button>
+      <button (click)="zoomClick(_zoomDirection['-'])">-</button>
+    </div>
+  </div>

@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  height: 0;
+  width: 0;
+}
+.edit-form {
+  position: absolute;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  padding: 0.25rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  background-color: #ccc;
+
+  &_header {
+    position: relative;
+    padding: 0.5rem;
+    background-color: #ccc;
+
+    &-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.05rem;
+    height: 0.85rem;
+    font-size: 0.55rem;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: red;
+    }
+  }
+  &_footer {
+    position: relative;
+    padding: 0.5rem;
+    background-color: #ccc;
+  }
+  &_button {
+    font-size: 0.75rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+    margin: 0 0.25rem;
+
+    &--close {
+      color: red;
+    }
+    &--submit {
+      color: green;
+    }
+  }
+  &_input {
+    padding-right: 1rem;
+    resize: none;
+  }
+  &_submit {
+    position: absolute;
+    top: 1.53rem;
+    right: -0.05rem;
+    width: 1.45rem;
+    height: 1.25rem;
+    font-size: 1.05rem;
+    border: 1px solid green;
+    cursor: pointer;
+    background-color: rgba($color: green, $alpha: 0.5);
+    color: green;
+  }
+}

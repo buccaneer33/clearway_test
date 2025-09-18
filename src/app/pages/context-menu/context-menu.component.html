@@ -1,0 +1,11 @@
+
+@if (show()) {
+<div class="context-menu" [ngStyle]="{'left.px': x(), 'top.px': y()}">
+  <ul>
+    <li (click)="addAnnotation()">Add Annotation</li>
+    <li (click)="zoom(_zoomDirection['+'])">Zoom +</li>
+    <li (click)="zoom(_zoomDirection['-'])">Zoom -</li>
+    <li (click)="saveAnnotations()">Save Annotations</li>
+  </ul>
+</div>
+}

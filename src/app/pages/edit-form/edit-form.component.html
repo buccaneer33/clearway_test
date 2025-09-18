@@ -1,0 +1,14 @@
+@if(showEditor()){
+  <div class="edit-form" [ngStyle]="{'left.px': x(), 'top.px': y()}">
+    <div class="edit-form_header">
+      <button class="edit-form_header-close" (click)="close()">x</button>
+    </div>
+    <form [formGroup]="annotation">
+      <textarea formControlName="content" class="edit-form_input" rows="5" cols="33"></textarea>
+    </form>
+    <div class="edit-form_footer">
+      <button class="edit-form_button edit-form_button--close" (click)="close()">Close</button>
+      <button class="edit-form_button edit-form_button--submit" (click)="add()">Add</button>
+    </div>
+  </div>
+}
